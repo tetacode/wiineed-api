@@ -13,14 +13,9 @@ public class DirectoryModel
         Dir = dir;
     }
 
-    public virtual FileModel CreateFile(string fileName)
+    public virtual FileModel CreateFileModel(string fileName)
     {
         return new FileModel(Dir, fileName);
-    }
-
-    public FileModel CreateFileGuid(string extension)
-    {
-        return new FileModel(Dir, $"{Guid.NewGuid().ToString()}{extension}");
     }
 
     public void CreateZip(FileModel file, bool deleteAfterZip = false)
@@ -31,7 +26,7 @@ public class DirectoryModel
             Directory.Delete(FullDirPath, deleteAfterZip);
     }
 
-    public DirectoryModel CreateDir(params string[] dirs)
+    public DirectoryModel CreateDirectoryModel(params string[] dirs)
     {
         var dir = string.Join(Path.DirectorySeparatorChar, dirs);
         var model = new DirectoryModel(Path.Join(Dir, dir));
@@ -45,16 +40,6 @@ public class DirectoryModel
         {
             Directory.CreateDirectory(Dir);
         }
-    }
-
-    public DirectoryModel CreateDateDir()
-    {
-        return CreateDir(CurrentDateDirName());
-    }
-
-    public static string CurrentDateDirName()
-    {
-        return DateTime.Now.ToString("yyyy-MM-dd");
     }
 
     public void Delete()
