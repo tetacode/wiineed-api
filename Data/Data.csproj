@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj" />
+      <ProjectReference Include="..\Utilities\Utilities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Entity\Anamnesi.cs" />
+      <Compile Remove="Repository\OrderModel\VoiceRecordOrderModel.cs" />
+      <Compile Remove="Repository\OrderModel\UserOrderModel.cs" />
+      <Compile Remove="Repository\OrderModel\StudyOrderModel.cs" />
+      <Compile Remove="Repository\OrderModel\ReportTemplateOrderModel.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Entity" />
+      <Folder Include="Model" />
+      <Folder Include="Repository\FilterModel" />
+    </ItemGroup>
+
+</Project>

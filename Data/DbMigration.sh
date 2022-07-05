@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "User ID=seckindbuser;Password=2BrfzfGDGNLZ;Server=app-test.ecloudpacs.com;Port=54320;Database=banko;Integrated Security=true;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL --context ApplicationDbContext -o Entity -f
