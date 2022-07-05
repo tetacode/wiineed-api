@@ -4,17 +4,15 @@ namespace Core.Service;
 
 public class FileModel
 {
-    public FileModel(string root, string dir, string fileName)
+    public FileModel(string dir, string fileName)
     {
         Dir = dir;
         FileName = fileName;
-        Root = root;
     }
 
-    public FileModel(string root, string file)
+    public FileModel(string path)
     {
-        Root = root;
-        var parms = file.Split(Path.DirectorySeparatorChar);
+        var parms = path.Split(Path.DirectorySeparatorChar);
         Dir = string.Join(Path.DirectorySeparatorChar, parms[new Range(0, parms.Length - 2)]);
         FileName = parms[^1];
     }
@@ -22,10 +20,8 @@ public class FileModel
     public string Root { get; }
     public string Dir { get; }
     public string FileName { get;  }
-
-    public string FilePath => Path.Join(Dir, FileName);
-
-    public string FullFilePath => Path.Join(Root, Dir, FileName);
+    
+    public string FullFilePath => Path.Join(Dir, FileName);
 
     public string DownloadFileName { get; set; }
     

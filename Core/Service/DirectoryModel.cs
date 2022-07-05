@@ -4,25 +4,23 @@ namespace Core.Service;
 
 public class DirectoryModel
 {
-    public string Root { get; }
     public string Dir { get; }
 
-    public string FullDirPath => Path.Join(Root, Dir);
+    public string FullDirPath => Dir;
 
-    public DirectoryModel(string root, string dir)
+    public DirectoryModel(string dir)
     {
         Dir = dir;
-        Root = root;
     }
 
     public virtual FileModel CreateFile(string fileName)
     {
-        return new FileModel(Root, Dir, fileName);
+        return new FileModel(Dir, fileName);
     }
 
     public FileModel CreateFileGuid(string extension)
     {
-        return new FileModel(Root, Dir, $"{Guid.NewGuid().ToString()}{extension}");
+        return new FileModel(Dir, $"{Guid.NewGuid().ToString()}{extension}");
     }
 
     public void CreateZip(FileModel file, bool deleteAfterZip = false)
@@ -36,16 +34,16 @@ public class DirectoryModel
     public DirectoryModel CreateDir(params string[] dirs)
     {
         var dir = string.Join(Path.DirectorySeparatorChar, dirs);
-        var model = new DirectoryModel(Root, Path.Join(Dir, dir));
+        var model = new DirectoryModel(Path.Join(Dir, dir));
         model.CreateDirectory();
         return model;
     }
     
     private void CreateDirectory()
     {
-        if (!Directory.Exists(Path.Join(Root, Dir)))
+        if (!Directory.Exists(Dir))
         {
-            Directory.CreateDirectory(Path.Join(Root, Dir));
+            Directory.CreateDirectory(Dir);
         }
     }
 
