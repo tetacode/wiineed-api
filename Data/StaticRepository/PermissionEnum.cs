@@ -1,6 +1,6 @@
 namespace Data.StaticRepository;
 
-public enum Permissions
+public enum PermissionEnum
 {
     
 }
