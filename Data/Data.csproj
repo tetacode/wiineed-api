@@ -26,7 +26,6 @@
 
     <ItemGroup>
       <Folder Include="Entity" />
-      <Folder Include="Model" />
       <Folder Include="Repository\FilterModel" />
     </ItemGroup>
 

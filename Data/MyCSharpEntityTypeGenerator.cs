@@ -15,7 +15,6 @@ public class MyCSharpEntityTypeGenerator : HbsCSharpEntityTypeGenerator
     public MyCSharpEntityTypeGenerator(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper, IEntityTypeTemplateService entityTypeTemplateService, IEntityTypeTransformationService entityTypeTransformationService, IOptions<HandlebarsScaffoldingOptions> options) : base(annotationCodeGenerator, cSharpHelper, entityTypeTemplateService, entityTypeTransformationService, options)
     {
         _options = options;
-        
         _customProperties = new List<CustomProperty>();
     }
 

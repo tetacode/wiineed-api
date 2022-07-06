@@ -33,8 +33,6 @@ public interface IRepository<T> where T : class, new()
     public IRepository<T> Include(Expression<Func<T, object>> exp);
     public IRepository<T> Include(IncludeBuilder<T> builder);
 
-    public void Middleware();
-
     public void SaveChanges();
     
     public IEnumerable<T> GetList();
