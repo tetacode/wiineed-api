@@ -8,12 +8,12 @@ public abstract class MongoDbEntity : IEntity<string>
 {
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonId]
-    [BsonElement(Order = 0)]
-    public string Id { get; }
+    [BsonElement("_id")]
+    public string Id { get; set; }
     
     [BsonRepresentation(BsonType.DateTime)]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
     [BsonElement(Order = 101)]
-    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedDate { get; set; }
     public bool IsDeleted { get; set; }
 }

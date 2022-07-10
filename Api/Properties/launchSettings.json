@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "BANKO": {
+    "API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

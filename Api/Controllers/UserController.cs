@@ -22,7 +22,7 @@ public class UserController : BaseApiController
 
     [HttpGet]
     [Produces(typeof(DataResult<UserDto>))]
-    public IActionResult User()
+    public IActionResult Information()
     {
         return CreateResult(_user.DataResult().As<User, UserDto>());
     }
@@ -30,7 +30,7 @@ public class UserController : BaseApiController
     [HttpGet]
     [Produces(typeof(DataResult<UserDto>))]
     [Route("{userId}")]
-    public IActionResult User(string userId)
+    public IActionResult Users(string userId)
     {
         return CreateResult(_userService.GetUser(userId).As<User, UserDto>());
     }

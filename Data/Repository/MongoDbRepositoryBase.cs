@@ -1,7 +1,10 @@
 using Core.Repository.Abstract;
 using Data.Entity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 
 namespace Data.Repository;
 
@@ -12,12 +15,25 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, string> where T 
     private MongoClient _client;
 
     private IClientSessionHandle _session;
-    
-    protected MongoDbRepositoryBase(IOptions<MongoDbSettings> options)
+    private readonly ILogger<MongoDbRepositoryBase<T>> _logger;
+
+    protected MongoDbRepositoryBase(IOptions<MongoDbSettings> options, ILogger<MongoDbRepositoryBase<T>> logger)
     {
+        _logger = logger;
         settings = options.Value;
-        _client = new MongoClient(this.settings.ConnectionString);
-        var db = _client.GetDatabase(this.settings.Database);
+
+        var clientSettings = MongoClientSettings.FromConnectionString(settings.ConnectionString);
+        clientSettings.ClusterConfigurator = cb =>
+        {
+            cb.Subscribe<CommandStartedEvent>(e =>
+            {
+                _logger.LogWarning($"{e.CommandName} - {e.Command.ToJson()}");
+            });
+        };
+        
+        _client = new MongoClient(clientSettings);
+        
+        var db = _client.GetDatabase(settings.Database);
         Collection = db.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
     }
     

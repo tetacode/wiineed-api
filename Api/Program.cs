@@ -63,6 +63,7 @@ builder.Services.Configure<MongoDbSettings>(options =>
         .GetSection(nameof(MongoDbSettings) + ":" + MongoDbSettings.ConnectionStringValue).Value;
     options.Database = builder.Configuration
         .GetSection(nameof(MongoDbSettings) + ":" + MongoDbSettings.DatabaseValue).Value;
+    
 });
 
 // Repositories
@@ -250,6 +251,7 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 
 
 app.Run();

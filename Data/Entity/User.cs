@@ -4,6 +4,7 @@ using Core.Repository.Abstract;
 
 namespace Data.Entity
 {
+    
     public partial class User : MongoDbEntity
     {
         public User()

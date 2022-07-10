@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.BaseController;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 [ValidateApiModelState]
 public abstract class ApiPublicControllerBase : ControllerBase
 {
