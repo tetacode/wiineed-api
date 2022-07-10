@@ -30,8 +30,8 @@ public class AuthenticationService : IAuthenticationService
     public DataResult<AuthView> Authenticate(Authenticate authenticate)
     {
         var user = _userRepository
-            .Where(x => x.Username == authenticate.Username)
-            .Get();
+            .Query()
+            .FirstOrDefault(x => x.Username == authenticate.Username);
 
         if (user == null)
         {

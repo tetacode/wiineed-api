@@ -20,7 +20,7 @@ public class UserService : IUserService
     public DataResult<User> GetUser(Guid uuid)
     {
         return _userRepository
-            .Where(x => x.Id == uuid)
-            .Get().DataResult();
+            .Query()
+            .FirstOrDefault(x => x.Id == uuid).DataResult();
     }
 }
