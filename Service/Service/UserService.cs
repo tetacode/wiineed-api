@@ -1,3 +1,4 @@
+using Core.Repository;
 using Core.Service;
 using Core.Service.Result;
 using Data.Entity;
@@ -17,10 +18,18 @@ public class UserService : IUserService
         _user = user;
     }
 
-    public DataResult<User> GetUser(Guid uuid)
+    public DataResult<User> GetUser(string id)
     {
         return _userRepository
             .Query()
-            .FirstOrDefault(x => x.Id == uuid).DataResult();
+            .FirstOrDefault(x => x.Id == id).DataResult();
+    }
+
+    public DataGridResult<User> GetUserGrid(DataGridInput gridInput)
+    {
+        return _userRepository
+            .Query()
+            .ToDataGrid(gridInput.PaginationQuery)
+            .DataGridResult();
     }
 }

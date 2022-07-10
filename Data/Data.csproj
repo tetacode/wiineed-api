@@ -24,9 +24,4 @@
       <Compile Remove="Repository\OrderModel\ReportTemplateOrderModel.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Entity" />
-      <Folder Include="Repository\FilterModel" />
-    </ItemGroup>
-
 </Project>

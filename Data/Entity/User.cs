@@ -4,14 +4,12 @@ using Core.Repository.Abstract;
 
 namespace Data.Entity
 {
-    public partial class User : IEntity
+    public partial class User : MongoDbEntity
     {
         public User()
         {
-            Roles = new HashSet<Role>();
+            
         }
-
-        public Guid Id { get; set; }
 
         public string Email { get; set; }
 
@@ -23,17 +21,6 @@ namespace Data.Entity
 
         public string PasswordSalt { get; set; }
 
-        public int[] PermissionIdList { get; set; }
-
-        public string Phone { get; set; }
-
         public string Username { get; set; }
-
-        public string VisibleName { get; set; }
-
-
-    
-    
-        public virtual ICollection<Role> Roles { get; set; }
     }
 }

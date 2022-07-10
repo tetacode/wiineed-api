@@ -1,12 +1,13 @@
 using Core.Repository;
 using Data.Entity;
 using Data.Repository.Abstract;
+using Microsoft.Extensions.Options;
 
 namespace Data.Repository;
 
-public class UserRepository : RepositoryBase<User>, IUserRepository
+public class UserRepository : MongoDbRepositoryBase<User>, IUserRepository
 {
-    public UserRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public UserRepository(IOptions<MongoDbSettings> options) : base(options)
     {
     }
 }

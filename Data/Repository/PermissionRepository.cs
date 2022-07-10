@@ -1,12 +1,13 @@
 using Core.Repository;
 using Data.Entity;
 using Data.Repository.Abstract;
+using Microsoft.Extensions.Options;
 
 namespace Data.Repository;
 
-public class PermissionRepository : RepositoryBase<Permission>, IPermissionRepository
+public class PermissionRepository : MongoDbRepositoryBase<Permission>, IPermissionRepository
 {
-    public PermissionRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public PermissionRepository(IOptions<MongoDbSettings> options) : base(options)
     {
     }
 }

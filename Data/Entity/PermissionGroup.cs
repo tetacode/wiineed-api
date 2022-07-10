@@ -4,20 +4,13 @@ using Core.Repository.Abstract;
 
 namespace Data.Entity
 {
-    public partial class PermissionGroup : IEntity
+    public partial class PermissionGroup : MongoDbEntity
     {
         public PermissionGroup()
         {
-            Permissions = new HashSet<Permission>();
+            
         }
 
-        public int Id { get; set; }
-
         public string Name { get; set; }
-
-
-    
-    
-        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

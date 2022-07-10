@@ -30,8 +30,15 @@ public class UserController : BaseApiController
     [HttpGet]
     [Produces(typeof(DataResult<UserDto>))]
     [Route("{userId}")]
-    public IActionResult User(Guid userId)
+    public IActionResult User(string userId)
     {
         return CreateResult(_userService.GetUser(userId).As<User, UserDto>());
+    }
+
+    [HttpPost]
+    [Produces(typeof(DataGridResult<UserDto>))]
+    public IActionResult Users([FromBody] DataGridInput gridInput)
+    {
+        return CreateResult(_userService.GetUserGrid(gridInput));
     }
 }

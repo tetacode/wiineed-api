@@ -1,12 +1,13 @@
 using Core.Repository;
 using Data.Entity;
 using Data.Repository.Abstract;
+using Microsoft.Extensions.Options;
 
 namespace Data.Repository;
 
-public class LogRepository : RepositoryBase<Log>, ILogRepository
+public class LogRepository : MongoDbRepositoryBase<Log>, ILogRepository
 {
-    public LogRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public LogRepository(IOptions<MongoDbSettings> options) : base(options)
     {
     }
 }

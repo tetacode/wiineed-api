@@ -8,6 +8,7 @@ using Api.Controllers.BaseController;
 using Api.Controllers.Dto.Mapper;
 using AutoMapper;
 using Core.Service.Exception;
+using Data;
 using Data.Entity;
 using Data.Repository;
 using Data.Repository.Abstract;
@@ -56,9 +57,12 @@ builder.Services.AddSwaggerGen(options => {
 });
 
 // Database
-builder.Services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>(opt =>
+builder.Services.Configure<MongoDbSettings>(options =>
 {
-   opt.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection"));
+    options.ConnectionString = builder.Configuration
+        .GetSection(nameof(MongoDbSettings) + ":" + MongoDbSettings.ConnectionStringValue).Value;
+    options.Database = builder.Configuration
+        .GetSection(nameof(MongoDbSettings) + ":" + MongoDbSettings.DatabaseValue).Value;
 });
 
 // Repositories
@@ -126,11 +130,11 @@ builder.Services
             {
                 // Get Login User Id
                 // https://www.oauth.com/oauth2-servers/access-tokens/self-encoded-access-tokens/
-                var uuid = ((JwtSecurityToken)ctx.SecurityToken).Claims.FirstOrDefault(x => x.Type == "Id")
+                var id = ((JwtSecurityToken)ctx.SecurityToken).Claims.FirstOrDefault(x => x.Type == "Id")
                     .Value;
                 
                 var userService = ctx.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                var user = userService.GetUser(Guid.Parse(uuid)).Data;
+                var user = userService.GetUser(id).Data;
 
                 ctx.HttpContext.Items["User"] = user;
                 return Task.CompletedTask;

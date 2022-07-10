@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
+using Core.Entity;
 using Core.Repository.Model;
 
 namespace Core.Repository.Abstract;
 
-public interface IRepository<T> where T : class, new()
+public interface IRepository<T, in TKey> where T : class, IEntity<TKey>, new() where TKey : IEquatable<TKey>
 {
     T Add(T data);
 
@@ -18,9 +19,7 @@ public interface IRepository<T> where T : class, new()
     public void DeleteRange(IEnumerable<T> data);
     
     public IQueryable<T> Query();
-
-    public void SaveChanges();
-
+    
     void BeginTransaction();
         
     void CommitTransaction();

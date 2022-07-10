@@ -3,7 +3,7 @@ using Data.Entity;
 
 namespace Data.Repository.Abstract;
 
-public interface IPermissionRepository : IRepository<Permission>
+public interface IPermissionRepository : IRepository<Permission, string>
 {
     
 }
