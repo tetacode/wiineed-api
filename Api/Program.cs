@@ -73,6 +73,7 @@ builder.Services.Configure<MongoDbSettings>(options =>
 // Repositories
 builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 
 
 //Services
@@ -80,6 +81,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<ILogService, LogService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IStorageService, StorageService>();
+builder.Services.AddScoped<IBusinessService, BusinessService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpContextAccessor();

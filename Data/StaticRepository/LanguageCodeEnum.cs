@@ -10,5 +10,8 @@ public enum LanguageCodeEnum
     ES,
     DE,
     IT,
-    FR
+    FR,
+    HI,
+    ZH,
+    PT
 }

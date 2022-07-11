@@ -15,4 +15,6 @@ public class Category
     public Locale Name { get; set; }
     public Media Image { get; set; }
     
+    public List<Guid> Products { get; set; }
+
 }

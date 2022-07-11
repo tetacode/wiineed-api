@@ -14,7 +14,6 @@ public class Business : MongoDbEntity
         Logo = new Media();
         BusinessSettings = new BusinessSettings();
         Menus = new List<Menu>();
-        Preview = new Media();
         Gallery = new List<Media>();
         WorkingHours = new List<WorkingHour>();
         Geolocation = new Geolocation();
@@ -28,10 +27,7 @@ public class Business : MongoDbEntity
     public SocialMedia SocialMedia { get; set; }
     public Media Logo { get; set; }
     public BusinessSettings BusinessSettings { get; set; }
-    
     public List<Menu> Menus { get; set; }
-    
-    public Media Preview { get; set; }
     public List<Media> Gallery { get; set; }
     
     public Geolocation Geolocation { get; set; }
