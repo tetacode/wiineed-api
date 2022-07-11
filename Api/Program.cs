@@ -79,6 +79,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<ILogService, LogService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IStorageService, StorageService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpContextAccessor();
@@ -87,6 +88,7 @@ builder.Services.AddTransient(s => (User)s.GetService<IHttpContextAccessor>().Ht
 
 builder.Services.Configure<ServiceConfiguration.App>(builder.Configuration.GetSection("App"));
 builder.Services.Configure<ServiceConfiguration.Jwt>(builder.Configuration.GetSection("Jwt"));
+builder.Services.Configure<ServiceConfiguration.S3>(builder.Configuration.GetSection("S3"));
 
 
 IdentityModelEventSource.ShowPII = true;

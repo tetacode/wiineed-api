@@ -23,25 +23,24 @@ public class UserService : IUserService
 
     public DataResult<User> GetUser(Guid id)
     {
+        var findOptions = new FindOptions<User>();
+
+        var s = _userRepository
+            .Collection()
+            .Find(x => x.Id == id)
+            .Project(x => x.Settings)
+            .FirstOrDefault();
+        
         return _userRepository
             .Query()
-            .FirstOrDefault(x => x.Id == id).DataResult();
+            .FirstOrDefault().DataResult();
     }
 
-    public DataGridResult<User> GetUserGrid(DataGridInput gridInput)
-    {
-        return _userRepository
-            .Query()
-            .ToDataGrid(gridInput.PaginationQuery)
-            .DataGridResult();
-    }
-
-    public void ChangeLanguage(LanguageCodeEnum languageCode)
+    public void ChangeLanguage(Guid id, LanguageCodeEnum languageCode)
     {
         var updateBuilder = Builders<User>.Update.Set(x => x.Settings.LanguageCode, languageCode);
         var res = _userRepository
             .Collection()
-            .UpdateOne(x => x.Id == _user.Id, updateBuilder);
-        var x = 10;
+            .UpdateOne(x => x.Id == id, updateBuilder);
     }
 }

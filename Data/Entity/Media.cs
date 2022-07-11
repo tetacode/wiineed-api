@@ -16,6 +16,8 @@ public class Media
 
     [BsonElement("_id")]
     public Guid Id { get; set; }
+    
+    public string Path { get; set; }
     public string Name { get; set; }
     public string OriginalName { get; set; }
     public string Src { get; set; }

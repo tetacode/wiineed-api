@@ -14,12 +14,14 @@ namespace Api.Controllers;
 public class UserController : BaseApiController
 {
     private readonly IUserService _userService;
+    private readonly IStorageService _storageService;
     private readonly User _user;
 
-    public UserController(IUserService userService, User user)
+    public UserController(IUserService userService, User user, IStorageService storageService)
     {
         _userService = userService;
         _user = user;
+        _storageService = storageService;
     }
 
     [HttpGet]
@@ -29,26 +31,18 @@ public class UserController : BaseApiController
         return CreateResult(_user.DataResult().As<User, UserDto>());
     }
 
-    [HttpGet]
-    [Produces(typeof(DataResult<UserDto>))]
-    [Route("{userId}")]
-    public IActionResult Users(Guid userId)
-    {
-        return CreateResult(_userService.GetUser(userId).As<User, UserDto>());
-    }
-
-    [HttpPost]
-    [Produces(typeof(DataGridResult<UserDto>))]
-    public IActionResult Users([FromBody] DataGridInput gridInput)
-    {
-        return CreateResult(_userService.GetUserGrid(gridInput));
-    }
-
     [HttpPut]
     [Produces(typeof(DataResult<int>))]
     public IActionResult ChangeLanguage([FromBody] LanguageCodeEnum languageCode)
     {
-        _userService.ChangeLanguage(languageCode);
+        _userService.ChangeLanguage(_user.Id, languageCode);
         return CreateResult();
+    }
+
+    [HttpPost]
+    [Produces(typeof(DataResult<Media>))]
+    public IActionResult UploadFile(IFormFile file)
+    {
+        return CreateResult(_storageService.UploadMedia(file.OpenReadStream(), "user", file.FileName));
     }
 }
