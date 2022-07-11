@@ -10,6 +10,7 @@ using AutoMapper;
 using Core.Service.Exception;
 using Data;
 using Data.Entity;
+using Data.Entity.Collection;
 using Data.Repository;
 using Data.Repository.Abstract;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,7 +31,10 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(x =>
-    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);;
+{
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -68,8 +72,6 @@ builder.Services.Configure<MongoDbSettings>(options =>
 
 // Repositories
 builder.Services.AddScoped<ILogRepository, LogRepository>();
-builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
@@ -135,7 +137,7 @@ builder.Services
                     .Value;
                 
                 var userService = ctx.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                var user = userService.GetUser(id).Data;
+                var user = userService.GetUser(Guid.Parse(id)).Data;
 
                 ctx.HttpContext.Items["User"] = user;
                 return Task.CompletedTask;

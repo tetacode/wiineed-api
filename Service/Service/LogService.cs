@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Core.Service.Exception;
 using Data.Entity;
+using Data.Entity.Collection;
 using Data.Repository.Abstract;
 using Service.Service.Abstract;
 

@@ -4,12 +4,18 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Data.Entity;
 
-public abstract class MongoDbEntity : IEntity<string>
+public abstract class MongoDbEntity : IEntity<Guid>
 {
-    [BsonRepresentation(BsonType.ObjectId)]
+    protected MongoDbEntity()
+    {
+        Id = Guid.NewGuid();
+        CreatedDate = DateTime.UtcNow;
+    }
+
+    [BsonRepresentation(BsonType.String)]
     [BsonId]
     [BsonElement("_id")]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
     [BsonRepresentation(BsonType.DateTime)]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

@@ -5,6 +5,7 @@ using Core.Service;
 using Core.Service.Exception;
 using Core.Service.Result;
 using Data.Entity;
+using Data.Entity.Collection;
 using Data.Repository.Abstract;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

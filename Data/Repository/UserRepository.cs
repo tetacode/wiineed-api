@@ -1,5 +1,6 @@
 using Core.Repository;
 using Data.Entity;
+using Data.Entity.Collection;
 using Data.Repository.Abstract;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

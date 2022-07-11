@@ -1,4 +1,5 @@
 using Data.Entity;
+using Data.Entity.Collection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

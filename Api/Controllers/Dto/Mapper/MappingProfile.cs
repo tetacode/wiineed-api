@@ -1,5 +1,6 @@
 using AutoMapper;
 using Data.Entity;
+using Data.Entity.Collection;
 
 namespace Api.Controllers.Dto.Mapper;
 

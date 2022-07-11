@@ -4,6 +4,8 @@ using Api.Controllers.Dto.Mapper;
 using Core.Service;
 using Core.Service.Result;
 using Data.Entity;
+using Data.Entity.Collection;
+using Data.StaticRepository;
 using Microsoft.AspNetCore.Mvc;
 using Service.Service.Abstract;
 
@@ -30,7 +32,7 @@ public class UserController : BaseApiController
     [HttpGet]
     [Produces(typeof(DataResult<UserDto>))]
     [Route("{userId}")]
-    public IActionResult Users(string userId)
+    public IActionResult Users(Guid userId)
     {
         return CreateResult(_userService.GetUser(userId).As<User, UserDto>());
     }
@@ -40,5 +42,13 @@ public class UserController : BaseApiController
     public IActionResult Users([FromBody] DataGridInput gridInput)
     {
         return CreateResult(_userService.GetUserGrid(gridInput));
+    }
+
+    [HttpPut]
+    [Produces(typeof(DataResult<int>))]
+    public IActionResult ChangeLanguage([FromBody] LanguageCodeEnum languageCode)
+    {
+        _userService.ChangeLanguage(languageCode);
+        return CreateResult();
     }
 }

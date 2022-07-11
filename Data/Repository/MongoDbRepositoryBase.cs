@@ -8,9 +8,9 @@ using MongoDB.Driver.Core.Events;
 
 namespace Data.Repository;
 
-public abstract class MongoDbRepositoryBase<T> : IRepository<T, string> where T : MongoDbEntity, new()
+public abstract class MongoDbRepositoryBase<T> : IRepository<T, Guid> where T : MongoDbEntity, new()
 {
-    protected readonly IMongoCollection<T> Collection;
+    protected readonly IMongoCollection<T> _collection;
     private readonly MongoDbSettings settings;
     private MongoClient _client;
 
@@ -34,25 +34,25 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, string> where T 
         _client = new MongoClient(clientSettings);
         
         var db = _client.GetDatabase(settings.Database);
-        Collection = db.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
+        _collection = db.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
     }
     
     public T Add(T data)
     {
         var options = new InsertOneOptions {BypassDocumentValidation = false};
-        Collection.InsertOne(data, options);
+        _collection.InsertOne(data, options);
         return data;
     }
 
     public void AddRange(IEnumerable<T> data)
     {
         var options = new InsertManyOptions() {IsOrdered = false, BypassDocumentValidation = false};
-        Collection.InsertMany(data, options);
+        _collection.InsertMany(data, options);
     }
 
     public T Update(T data)
     {
-        return Collection.FindOneAndReplace(x => x.Id == data.Id, data);
+        return _collection.FindOneAndReplace(x => x.Id == data.Id, data);
     }
 
     public void UpdateRange(IEnumerable<T> data)
@@ -62,7 +62,7 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, string> where T 
             BeginTransaction();
             foreach (var entity in data)
             {
-                Collection.FindOneAndReplace(x => x.Id == entity.Id, entity);
+                _collection.FindOneAndReplace(x => x.Id == entity.Id, entity);
             }
             CommitTransaction();
         }
@@ -75,20 +75,25 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, string> where T 
 
     public void Delete(T data)
     {
-        Collection.FindOneAndDelete(x => x.Id == data.Id);
+        _collection.FindOneAndDelete(x => x.Id == data.Id);
     }
 
     public void DeleteRange(IEnumerable<T> data)
     {
         foreach (var entity in data)
         {
-            Collection.FindOneAndDelete(x => x.Id == entity.Id);
+            _collection.FindOneAndDelete(x => x.Id == entity.Id);
         }
     }
 
     public IQueryable<T> Query()
     {
-        return Collection.AsQueryable();
+        return _collection.AsQueryable();
+    }
+
+    public IMongoCollection<T> Collection()
+    {
+        return _collection;
     }
 
     public void BeginTransaction()

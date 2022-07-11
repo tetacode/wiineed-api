@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Repository.Abstract;
-
-namespace Data.Entity
+﻿namespace Data.Entity.Collection
 {
     
     public partial class User : MongoDbEntity
     {
         public User()
         {
-            
+            Settings = new UserSettings();
         }
 
         public string Email { get; set; }
@@ -23,5 +19,9 @@ namespace Data.Entity
         public string PasswordSalt { get; set; }
 
         public string Username { get; set; }
+        
+        public Guid BusinessId { get; set; }
+        
+        public UserSettings Settings { get; set; }
     }
 }
