@@ -8,11 +8,11 @@ public class WorkingHour
 {
     public WorkingHour()
     {
-        Id = Guid.NewGuid();
+        Key = Guid.NewGuid();
     }
 
     [BsonRepresentation(BsonType.String)]
-    public Guid Id { get; set; }
+    public Guid Key { get; set; }
     
     [BsonRepresentation(BsonType.String)]
     public DayEnum Day { get; set; }

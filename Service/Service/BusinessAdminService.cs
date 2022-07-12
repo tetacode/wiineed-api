@@ -15,11 +15,11 @@ public class BusinessAdminService : IBusinessAdminService
         _businessRepository = businessRepository;
     }
 
-    public DataResult<Business> GetBusiness(Guid id)
+    public DataResult<Business> GetBusiness(Guid key)
     {
         return _businessRepository
             .Query()
-            .FirstOrDefault(x => x.Key == id)
+            .FirstOrDefault(x => x.Key == key)
             .DataResult();
     }
 }

@@ -8,7 +8,7 @@ public class Media
 {
     public Media()
     {
-        Id = Guid.NewGuid();
+        Key = Guid.NewGuid();
         MediaType = MediaTypeEnum.IMAGE;
         CreatedDate = DateTime.UtcNow;
         Enabled = true;
@@ -16,7 +16,7 @@ public class Media
     }
 
     [BsonRepresentation(BsonType.String)]
-    public Guid Id { get; set; }
+    public Guid Key { get; set; }
     
     public string Path { get; set; }
     public string Name { get; set; }

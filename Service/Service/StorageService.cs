@@ -58,7 +58,7 @@ public class StorageService : IStorageService
             throw new ServiceException("File Type Error!");
 
         var media = new Media();
-        media.Name = $"{media.Id}{extension}";
+        media.Name = $"{media.Key}{extension}";
         media.Path = $"{filePath ?? ""}/{media.Name}";
         media.OriginalName = fileName;
         media.MediaType = GetMediaType(extension);

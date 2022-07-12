@@ -8,6 +8,6 @@ namespace Service.Service.Abstract;
 
 public interface IUserService
 {
-    public DataResult<User> GetUser(Guid id);
-    public void ChangeLanguage(Guid id, LanguageCodeEnum languageCode);
+    public DataResult<User> GetUser(Guid key);
+    public void ChangeLanguage(Guid key, LanguageCodeEnum languageCode);
 }

@@ -7,12 +7,12 @@ public class CategoryItem
 {
     public CategoryItem()
     {
-        Id = Guid.NewGuid();
+        Key = Guid.NewGuid();
         Order = 0;
     }
 
     [BsonRepresentation(BsonType.String)]
-    public Guid Id { get; set; }
+    public Guid Key { get; set; }
     public int Order { get; set; }
     
     public Guid ProductId { get; set; }

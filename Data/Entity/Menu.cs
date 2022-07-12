@@ -13,7 +13,7 @@ public class Menu
     }
 
     [BsonRepresentation(BsonType.String)]
-    public Guid Id { get; set; }
+    public Guid Key { get; set; }
     public string Name { get; set; }
     public Boolean Enabled { get; set; }
     public List<Category> Categories { get; set; }

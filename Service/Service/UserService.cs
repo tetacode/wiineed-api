@@ -23,12 +23,12 @@ public class UserService : IUserService
         _user = user;
     }
 
-    public DataResult<User> GetUser(Guid id)
+    public DataResult<User> GetUser(Guid key)
     {
         var s = _userRepository
             .Collection()
             .Aggregate()
-            .Match(x => x.Key == id)
+            .Match(x => x.Key == key)
             .Lookup(
                 Fielder.ClassName(typeof(Business)),
                 Fielder.Field<User>(x => x.BusinessId),
@@ -38,7 +38,7 @@ public class UserService : IUserService
             .Unwind(Fielder.Field<User>(x => x.Business))
             .Project(new BsonDocument
             {
-                {Fielder.Field<User>(x => x.Business.BusinessSettings), 1},
+                {Fielder.Field<User>(x => x.Business.Menus), 1},
                 {Fielder.Field<User>(x => x.Business.Name), 1},
                 {Fielder.Field<User>(x => x.Business.Key), 1}
             })
@@ -51,11 +51,11 @@ public class UserService : IUserService
             .FirstOrDefault().DataResult();
     }
 
-    public void ChangeLanguage(Guid id, LanguageCodeEnum languageCode)
+    public void ChangeLanguage(Guid key, LanguageCodeEnum languageCode)
     {
         var updateBuilder = Builders<User>.Update.Set(x => x.Settings.LanguageCode, languageCode);
         var res = _userRepository
             .Collection()
-            .UpdateOne(x => x.Key == id, updateBuilder);
+            .UpdateOne(x => x.Key == key, updateBuilder);
     }
 }

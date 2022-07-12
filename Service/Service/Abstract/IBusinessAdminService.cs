@@ -5,5 +5,5 @@ namespace Service.Service.Abstract;
 
 public interface IBusinessAdminService
 {
-    public DataResult<Business> GetBusiness(Guid id);
+    public DataResult<Business> GetBusiness(Guid key);
 }

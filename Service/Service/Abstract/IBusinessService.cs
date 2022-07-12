@@ -8,9 +8,9 @@ public interface IBusinessService
 {
     public void EditBusiness(BussinessEdit data);
     public DataResult<Guid> CreateMenu(MenuCreateEdit data);
-    public void EditMenu(Guid id, MenuCreateEdit data);
+    public void EditMenu(Guid key, MenuCreateEdit data);
     public DataListResult<Menu> GetMenuList();
-    public DataResult<Menu> GetMenu(Guid id);
+    public DataResult<Menu> GetMenu(Guid key);
     public DataResult<Guid> CreateCategory(Guid menuId, CategoryCreateEdit data);
     public void EditCategory(Guid menuId, Guid categoryId, CategoryCreateEdit data);
     public DataResult<Category> GetCategory(Guid menuId, Guid categoryId);

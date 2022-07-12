@@ -60,7 +60,7 @@ public class BusinessService : IBusinessService
         return menu.Id.DataResult();
     }
 
-    public void EditMenu(Guid id, MenuCreateEdit data)
+    public void EditMenu(Guid key, MenuCreateEdit data)
     {
         var update = Builders<Business>.Update
             .Set(x => x.Menus[-1].Name, data.Name)
@@ -68,7 +68,7 @@ public class BusinessService : IBusinessService
 
         var builder = Builders<Business>.Filter;
         var filter = builder.Eq(x => x.Key, _user.BusinessId)
-                     & builder.ElemMatch(x => x.Menus, x => x.Id == id);
+                     & builder.ElemMatch(x => x.Menus, x => x.Id == key);
 
         _businessRepository
             .Collection()
@@ -90,11 +90,11 @@ public class BusinessService : IBusinessService
             .DataListResult();
     }
 
-    public DataResult<Menu> GetMenu(Guid id)
+    public DataResult<Menu> GetMenu(Guid key)
     {
         var builder = Builders<Business>.Filter;
         var filter = builder.Eq(x => x.Key, _user.BusinessId)
-                     & builder.ElemMatch(x => x.Menus, x => x.Id == id);
+                     & builder.ElemMatch(x => x.Menus, x => x.Id == key);
         
         
         var fieldsBuilder = Builders<Business>.Projection;
@@ -131,7 +131,7 @@ public class BusinessService : IBusinessService
             .Collection()
             .UpdateOne(filter, update);
 
-        return category.Id.DataResult();
+        return category.Key.DataResult();
     }
 
     public void EditCategory(Guid menuId, Guid categoryId, CategoryCreateEdit data)
@@ -139,7 +139,7 @@ public class BusinessService : IBusinessService
         var builder = Builders<Business>.Filter;
         var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId)
-                     & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Id == categoryId));
+                     & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Key == categoryId));
 
         var update = Builders<Business>.Update
             .Set<Locale>(x => x.Menus[0].Categories[-1].Name, data.Name.ToLocale(_business.BusinessSettings.DefaultLanguageCode))
@@ -156,7 +156,7 @@ public class BusinessService : IBusinessService
         var builder = Builders<Business>.Filter;
         var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId)
-                     & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Id == categoryId));
+                     & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Key == categoryId));
 
         var find = _businessRepository
             .Collection()
