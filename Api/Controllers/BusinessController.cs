@@ -45,4 +45,33 @@ public class BusinessController : BaseApiController
         _businessService.EditMenu(menuId, data);
         return CreateResult(menuId.DataResult());
     }
+    
+    [HttpGet("/api/Business/Menus/{menuId}/categories")]
+    [Produces(typeof(DataListResult<Menu>))]
+    public IActionResult Categories(Guid menuId)
+    {
+        return CreateResult(_businessService.GetCategoryList(menuId));
+    }
+
+    [HttpGet("/api/Business/Menus/{menuId}/categories/{categoryId}")]
+    [Produces(typeof(DataResult<Menu>))]
+    public IActionResult Categories(Guid menuId, Guid categoryId)
+    {
+        return CreateResult(_businessService.GetCategory(menuId, categoryId));
+    }
+
+    [HttpPost("/api/Business/Menus/{menuId}/categories/create")]
+    [Produces(typeof(DataResult<Guid>))]
+    public IActionResult Categories(Guid menuId, [FromBody] CategoryCreateEdit data)
+    {
+        return CreateResult(_businessService.CreateCategory(menuId, data));
+    }
+
+    [HttpPut("/api/Business/Menus/{menuId}/categories/{categoryId}/edit")]
+    [Produces(typeof(DataResult<Guid>))]
+    public IActionResult Categories(Guid menuId, Guid categoryId, [FromBody] CategoryCreateEdit data)
+    {
+        _businessService.EditCategory(menuId, categoryId, data);
+        return CreateResult();
+    }
 }

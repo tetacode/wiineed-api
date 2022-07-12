@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Repository.Abstract;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Data.Entity
 {
@@ -8,6 +10,8 @@ namespace Data.Entity
     {
         public string? Data { get; set; }
         
+        
+        [BsonRepresentation(BsonType.String)]
         public Guid? UserId { get; set; }
     }
 }

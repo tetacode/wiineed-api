@@ -1,4 +1,6 @@
 using Data.StaticRepository;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Data.Entity;
 
@@ -6,14 +8,14 @@ public class Locale
 {
     public Locale()
     {
-        LocaleTexts = new Dictionary<LanguageCodeEnum, LocaleText>();
-        DefaultLanguageCode = LanguageCodeEnum.NULL;
+        LocaleTexts = new Dictionary<string, LocaleText>();
     }
 
     public string DefaultText { get; set; }
     
+    [BsonRepresentation(BsonType.String)]
     public LanguageCodeEnum DefaultLanguageCode { get; set; }
-    public Dictionary<LanguageCodeEnum, LocaleText> LocaleTexts { get; set; }
+    public Dictionary<string, LocaleText> LocaleTexts { get; set; }
 
     public override string ToString()
     {
@@ -22,9 +24,10 @@ public class Locale
 
     public string ToString(LanguageCodeEnum languageCode)
     {
-        if (LocaleTexts.ContainsKey(languageCode))
+        var code = languageCode.ToString();
+        if (LocaleTexts.ContainsKey(code))
         {
-            return LocaleTexts[languageCode].Text;
+            return LocaleTexts[code].Text;
         }
 
         return DefaultText;

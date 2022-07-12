@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Data.Entity;
@@ -12,6 +13,7 @@ public class Menu
     }
 
     [BsonElement("_id")]
+    [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     public string Name { get; set; }
     public Boolean Enabled { get; set; }

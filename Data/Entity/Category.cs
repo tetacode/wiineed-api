@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Data.Entity;
@@ -11,8 +12,10 @@ public class Category
     }
 
     [BsonElement("_id")]
+    [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     public Locale Name { get; set; }
+    public Locale Description { get; set; }
     public Media Image { get; set; }
     
     public List<Guid> Products { get; set; }
