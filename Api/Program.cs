@@ -88,7 +88,6 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient(s => (User)s.GetService<IHttpContextAccessor>().HttpContext.Items["User"]);
-builder.Services.AddTransient(s => (Business)s.GetService<IHttpContextAccessor>().HttpContext.Items["Business"]);
 
 builder.Services.Configure<ServiceConfiguration.App>(builder.Configuration.GetSection("App"));
 builder.Services.Configure<ServiceConfiguration.Jwt>(builder.Configuration.GetSection("Jwt"));
@@ -143,11 +142,10 @@ builder.Services
                     .Value;
                 
                 var userService = ctx.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                var businessAdminService = ctx.HttpContext.RequestServices.GetRequiredService<IBusinessAdminService>();
                 var user = userService.GetUser(Guid.Parse(id)).Data;
-                var business = businessAdminService.GetBusiness(user.BusinessId).Data;
+                
                 ctx.HttpContext.Items["User"] = user;
-                ctx.HttpContext.Items["Business"] = business;
+                
                 return Task.CompletedTask;
             }
         };

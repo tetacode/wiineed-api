@@ -22,7 +22,7 @@ namespace Data.Entity.Collection
 
         public string Username { get; set; }
         
-        public Guid BusinessId { get; set; }
+        public Guid BusinessKey { get; set; }
         
         public UserSettings Settings { get; set; }
         

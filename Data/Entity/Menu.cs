@@ -7,7 +7,7 @@ public class Menu
 {
     public Menu()
     {
-        Id = Guid.NewGuid();
+        Key = Guid.NewGuid();
         Enabled = true;
         Categories = new List<Category>();
     }

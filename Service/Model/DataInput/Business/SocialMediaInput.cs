@@ -1,6 +1,6 @@
-namespace Data.Entity;
+namespace Service.Model.DataInput.Business;
 
-public class SocialMedia
+public class SocialMediaInput
 {
     public string? Website { get; set; }
     public string? Instagram { get; set; }

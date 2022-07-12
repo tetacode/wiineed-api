@@ -1,6 +1,6 @@
-namespace Data.Entity;
+namespace Api.Controllers.Dto;
 
-public class SocialMedia
+public class SocialMediaDto
 {
     public string? Website { get; set; }
     public string? Instagram { get; set; }

@@ -1,12 +1,9 @@
-namespace Data.Entity;
+using Data.Entity;
 
-public class Address
+namespace Service.Model.DataInput.Business;
+
+public class AddressInput
 {
-    public Address()
-    {
-        Phone = new Phone();
-    }
-
     public string AddressLine1 { get; set; }
     public string? AddressLine2 { get; set; }
     public string State { get; set; }

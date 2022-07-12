@@ -5,6 +5,7 @@ using Data.Entity;
 using Data.Entity.Collection;
 using Data.Repository.Abstract;
 using Data.StaticRepository;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -31,14 +32,19 @@ public class UserService : IUserService
             .Match(x => x.Key == key)
             .Lookup(
                 Fielder.ClassName(typeof(Business)),
-                Fielder.Field<User>(x => x.BusinessId),
+                Fielder.Field<User>(x => x.BusinessKey),
                 Fielder.Field<Business>(x => x.Key),
                 Fielder.Field<User>(x => x.Business)
             )
             .Unwind(Fielder.Field<User>(x => x.Business))
             .Project(new BsonDocument
             {
-                {Fielder.Field<User>(x => x.Business.Menus), 1},
+                {Fielder.Field<User>(x => x.Email), 1},
+                {Fielder.Field<User>(x => x.Name), 1},
+                {Fielder.Field<User>(x => x.Lastname), 1},
+                {Fielder.Field<User>(x => x.Username), 1},
+                {Fielder.Field<User>(x => x.Settings), 1},
+                {Fielder.Field<User>(x => x.Business.BusinessSettings), 1},
                 {Fielder.Field<User>(x => x.Business.Name), 1},
                 {Fielder.Field<User>(x => x.Business.Key), 1}
             })
@@ -46,9 +52,7 @@ public class UserService : IUserService
 
         var user = BsonSerializer.Deserialize<User>(s);
 
-        return _userRepository
-            .Query()
-            .FirstOrDefault().DataResult();
+        return user.DataResult();
     }
 
     public void ChangeLanguage(Guid key, LanguageCodeEnum languageCode)
