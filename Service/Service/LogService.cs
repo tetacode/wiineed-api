@@ -33,7 +33,7 @@ public class LogService : ILogService
         _logRepository.Add(new Log()
         {
             Data = JsonSerializer.Serialize(log),
-            UserId = _user != null ? _user.Id : null
+            UserId = _user != null ? _user.Key : null
         });
     }
 
@@ -51,7 +51,7 @@ public class LogService : ILogService
         _logRepository.Add(new Log()
         {
             Data = JsonSerializer.Serialize(log),
-            UserId = _user != null ? _user.Id : null
+            UserId = _user != null ? _user.Key : null
         });
     }
 
@@ -69,7 +69,7 @@ public class LogService : ILogService
         _logRepository.Add(new Log()
         {
             Data = JsonSerializer.Serialize(log),
-            UserId = _user != null ? _user.Id : null
+            UserId = _user != null ? _user.Key : null
         });
     }
 }

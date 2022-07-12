@@ -31,7 +31,7 @@ public class BusinessService : IBusinessService
     {
         var business = _businessRepository
             .Query()
-            .FirstOrDefault(x => x.Id == _user.BusinessId);
+            .FirstOrDefault(x => x.Key == _user.BusinessId);
 
         business.Name = data.Name.ToLocale(_business.BusinessSettings.DefaultLanguageCode);
         business.Address = data.Address;
@@ -55,7 +55,7 @@ public class BusinessService : IBusinessService
 
         _businessRepository
             .Collection()
-            .UpdateOne(x => x.Id == _user.BusinessId, update);
+            .UpdateOne(x => x.Key == _user.BusinessId, update);
 
         return menu.Id.DataResult();
     }
@@ -67,7 +67,7 @@ public class BusinessService : IBusinessService
             .Set(x => x.Menus[-1].Enabled, data.Enabled);
 
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == id);
 
         _businessRepository
@@ -83,7 +83,7 @@ public class BusinessService : IBusinessService
 
         return _businessRepository
             .Collection()
-            .Find(x => x.Id == _user.BusinessId)
+            .Find(x => x.Key == _user.BusinessId)
             .Project(fields)
             .Project(x => x.Menus)
             .FirstOrDefault()
@@ -93,14 +93,14 @@ public class BusinessService : IBusinessService
     public DataResult<Menu> GetMenu(Guid id)
     {
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == id);
         
         
         var fieldsBuilder = Builders<Business>.Projection;
         var fields = fieldsBuilder
-            .Exclude(ProjectionBuilder.Field<Business>(x => x.Menus[-1].Categories))
-            .Exclude(ProjectionBuilder.Field<Business>(x => x.Menus[-1].Name));
+            .Exclude(Fielder.Field<Business>(x => x.Menus[-1].Categories))
+            .Exclude(Fielder.Field<Business>(x => x.Menus[-1].Name));
         
 
         return _businessRepository
@@ -121,7 +121,7 @@ public class BusinessService : IBusinessService
         category.Products = data.Products;
 
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId);
 
         var update = Builders<Business>.Update
@@ -137,7 +137,7 @@ public class BusinessService : IBusinessService
     public void EditCategory(Guid menuId, Guid categoryId, CategoryCreateEdit data)
     {
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId)
                      & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Id == categoryId));
 
@@ -154,7 +154,7 @@ public class BusinessService : IBusinessService
     public DataResult<Category> GetCategory(Guid menuId, Guid categoryId)
     {
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId)
                      & builder.ElemMatch(x => x.Menus, Builders<Menu>.Filter.ElemMatch(y => y.Categories, z => z.Id == categoryId));
 
@@ -171,7 +171,7 @@ public class BusinessService : IBusinessService
     public DataListResult<Category> GetCategoryList(Guid menuId)
     {
         var builder = Builders<Business>.Filter;
-        var filter = builder.Eq(x => x.Id, _user.BusinessId)
+        var filter = builder.Eq(x => x.Key, _user.BusinessId)
                      & builder.ElemMatch(x => x.Menus, x => x.Id == menuId);
 
         return _businessRepository

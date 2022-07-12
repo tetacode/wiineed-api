@@ -5,6 +5,8 @@ using Data.Entity;
 using Data.Entity.Collection;
 using Data.Repository.Abstract;
 using Data.StaticRepository;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Service.Service.Abstract;
 
@@ -23,14 +25,27 @@ public class UserService : IUserService
 
     public DataResult<User> GetUser(Guid id)
     {
-        var findOptions = new FindOptions<User>();
-
         var s = _userRepository
             .Collection()
-            .Find(x => x.Id == id)
-            .Project(x => x.Settings)
+            .Aggregate()
+            .Match(x => x.Key == id)
+            .Lookup(
+                Fielder.ClassName(typeof(Business)),
+                Fielder.Field<User>(x => x.BusinessId),
+                Fielder.Field<Business>(x => x.Key),
+                Fielder.Field<User>(x => x.Business)
+            )
+            .Unwind(Fielder.Field<User>(x => x.Business))
+            .Project(new BsonDocument
+            {
+                {Fielder.Field<User>(x => x.Business.BusinessSettings), 1},
+                {Fielder.Field<User>(x => x.Business.Name), 1},
+                {Fielder.Field<User>(x => x.Business.Key), 1}
+            })
             .FirstOrDefault();
-        
+
+        var user = BsonSerializer.Deserialize<User>(s);
+
         return _userRepository
             .Query()
             .FirstOrDefault().DataResult();
@@ -41,6 +56,6 @@ public class UserService : IUserService
         var updateBuilder = Builders<User>.Update.Set(x => x.Settings.LanguageCode, languageCode);
         var res = _userRepository
             .Collection()
-            .UpdateOne(x => x.Id == id, updateBuilder);
+            .UpdateOne(x => x.Key == id, updateBuilder);
     }
 }

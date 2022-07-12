@@ -11,7 +11,6 @@ public class CategoryItem
         Order = 0;
     }
 
-    [BsonElement("_id")]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     public int Order { get; set; }

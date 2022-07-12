@@ -15,7 +15,6 @@ public class Media
         Order = 1;
     }
 
-    [BsonElement("_id")]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     

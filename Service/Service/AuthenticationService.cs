@@ -64,7 +64,7 @@ public class AuthenticationService : IAuthenticationService
             _jwt.Issuer,    
             new List<Claim>()
             {
-                new Claim("Id", user.Id.ToString())
+                new Claim("Id", user.Key.ToString())
             },    
             expires: DateTime.Now.AddMinutes(120),    
             signingCredentials: credentials);    

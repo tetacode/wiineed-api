@@ -10,6 +10,7 @@ public class LocaleText
     
     [BsonRepresentation(BsonType.String)]
     public LanguageCodeEnum LanguageCode { get; set; }
+    
     public Boolean IsTranslated { get; set; }
 
     public override string ToString()

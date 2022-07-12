@@ -12,7 +12,6 @@ public class Menu
         Categories = new List<Category>();
     }
 
-    [BsonElement("_id")]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     public string Name { get; set; }

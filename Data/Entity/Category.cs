@@ -11,7 +11,6 @@ public class Category
         Image = new Media();
     }
 
-    [BsonElement("_id")]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     public Locale Name { get; set; }

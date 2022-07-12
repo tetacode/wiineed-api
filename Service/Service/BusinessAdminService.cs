@@ -19,7 +19,7 @@ public class BusinessAdminService : IBusinessAdminService
     {
         return _businessRepository
             .Query()
-            .FirstOrDefault(x => x.Id == id)
+            .FirstOrDefault(x => x.Key == id)
             .DataResult();
     }
 }

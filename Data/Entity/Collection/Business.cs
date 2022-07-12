@@ -2,6 +2,7 @@ using Data.StaticRepository;
 
 namespace Data.Entity.Collection;
 
+
 public class Business : MongoDbEntity
 {
     public Business()

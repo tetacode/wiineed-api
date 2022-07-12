@@ -1,4 +1,6 @@
-﻿namespace Data.Entity.Collection
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Data.Entity.Collection
 {
     
     public partial class User : MongoDbEntity
@@ -23,5 +25,7 @@
         public Guid BusinessId { get; set; }
         
         public UserSettings Settings { get; set; }
+        
+        public Business Business { get; set; }
     }
 }

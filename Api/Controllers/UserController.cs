@@ -35,7 +35,7 @@ public class UserController : BaseApiController
     [Produces(typeof(DataResult<int>))]
     public IActionResult ChangeLanguage([FromBody] LanguageCodeEnum languageCode)
     {
-        _userService.ChangeLanguage(_user.Id, languageCode);
+        _userService.ChangeLanguage(_user.Key, languageCode);
         return CreateResult();
     }
 

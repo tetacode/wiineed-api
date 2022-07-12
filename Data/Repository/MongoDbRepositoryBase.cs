@@ -52,7 +52,7 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, Guid> where T : 
 
     public T Update(T data)
     {
-        return _collection.FindOneAndReplace(x => x.Id == data.Id, data);
+        return _collection.FindOneAndReplace(x => x.Key == data.Key, data);
     }
 
     public void UpdateRange(IEnumerable<T> data)
@@ -62,7 +62,7 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, Guid> where T : 
             BeginTransaction();
             foreach (var entity in data)
             {
-                _collection.FindOneAndReplace(x => x.Id == entity.Id, entity);
+                _collection.FindOneAndReplace(x => x.Key == entity.Key, entity);
             }
             CommitTransaction();
         }
@@ -75,14 +75,14 @@ public abstract class MongoDbRepositoryBase<T> : IRepository<T, Guid> where T : 
 
     public void Delete(T data)
     {
-        _collection.FindOneAndDelete(x => x.Id == data.Id);
+        _collection.FindOneAndDelete(x => x.Key == data.Key);
     }
 
     public void DeleteRange(IEnumerable<T> data)
     {
         foreach (var entity in data)
         {
-            _collection.FindOneAndDelete(x => x.Id == entity.Id);
+            _collection.FindOneAndDelete(x => x.Key == entity.Key);
         }
     }
 

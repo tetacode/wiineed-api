@@ -11,7 +11,6 @@ public class WorkingHour
         Id = Guid.NewGuid();
     }
 
-    [BsonElement("_id")]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
     

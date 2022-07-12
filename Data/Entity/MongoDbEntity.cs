@@ -8,14 +8,17 @@ public abstract class MongoDbEntity : IEntity<Guid>
 {
     protected MongoDbEntity()
     {
-        Id = Guid.NewGuid();
+        Key = Guid.NewGuid();
         CreatedDate = DateTime.UtcNow;
     }
+    
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId _id { get; set; }
+    
 
     [BsonRepresentation(BsonType.String)]
-    [BsonId]
-    [BsonElement("_id")]
-    public Guid Id { get; set; }
+    public Guid Key { get; set; }
     
     [BsonRepresentation(BsonType.DateTime)]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
